@@ -1,42 +1,91 @@
+"use client"
 import React from "react"
-import { SearchOutlined } from "@ant-design/icons"
-import { Button, Flex, Tooltip } from "antd"
+import { Space, Table, Tag } from "antd"
+import type { TableProps } from "antd"
+
+interface DataType {
+  key: string
+  name: string
+  age: number
+  address: string
+  tags: string[]
+}
+
+const columns: TableProps<DataType>["columns"] = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Age",
+    dataIndex: "age",
+    key: "age",
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
+  },
+  {
+    title: "Tags",
+    key: "tags",
+    dataIndex: "tags",
+    render: (_, { tags }) => (
+      <>
+        {tags.map((tag) => {
+          let color = tag.length > 5 ? "geekblue" : "green"
+          if (tag === "loser") {
+            color = "volcano"
+          }
+          return (
+            <Tag color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          )
+        })}
+      </>
+    ),
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <a>Invite {record.name}</a>
+        <a>Delete</a>
+      </Space>
+    ),
+  },
+]
+
+const data: DataType[] = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ["nice", "developer"],
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+    address: "London No. 1 Lake Park",
+    tags: ["loser"],
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+    address: "Sydney No. 1 Lake Park",
+    tags: ["cool", "teacher"],
+  },
+]
 
 const App: React.FC = () => (
-  <Flex gap="small" vertical>
-    <Flex wrap gap="small">
-      <Tooltip title="search">
-        <Button type="primary" shape="circle" icon={<SearchOutlined />} />
-      </Tooltip>
-      <Button type="primary" shape="circle">
-        A
-      </Button>
-      <Button type="primary" icon={<SearchOutlined />}>
-        Search
-      </Button>
-      <Tooltip title="search">
-        <Button shape="circle" icon={<SearchOutlined />} />
-      </Tooltip>
-      <Button icon={<SearchOutlined />}>Search</Button>
-    </Flex>
-    <Flex wrap gap="small">
-      <Tooltip title="search">
-        <Button shape="circle" icon={<SearchOutlined />} />
-      </Tooltip>
-      <Button icon={<SearchOutlined />}>Search</Button>
-      <Tooltip title="search">
-        <Button type="dashed" shape="circle" icon={<SearchOutlined />} />
-      </Tooltip>
-      <Button type="dashed" icon={<SearchOutlined />}>
-        Search
-      </Button>
-      <Button
-        icon={<SearchOutlined />}
-        href="https://www.google.com"
-        target="_blank"
-      />
-    </Flex>
-  </Flex>
+  <Table<DataType> columns={columns} dataSource={data} />
 )
 
 export default App

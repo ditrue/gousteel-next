@@ -1,0 +1,12 @@
+model Category {
+    id         Int       @id @default(autoincrement())
+    title      String    @db.VarChar(255)
+    name       String    @db.VarChar(255)
+    created_at DateTime? @db.Timestamp
+    updated_at DateTime? @db.Timestamp
+    deleted_at DateTime? @db.Timestamp
+
+    documents Document[]
+
+    @@map(name: "categories")
+}

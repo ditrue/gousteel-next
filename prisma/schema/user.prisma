@@ -1,0 +1,33 @@
+model User {
+    id                Int         @id @default(autoincrement())
+    name              String?     @db.VarChar(255)
+    old_id            Int?
+    mobile            String?     @db.VarChar(16)
+    email             String?     @db.VarChar(255)
+    email_verified_at DateTime?
+    password          String?     @db.VarChar(255)
+    remember_token    String?     @db.VarChar(100)
+    old_password      String?     @db.VarChar(255)
+    company_name      String?     @db.VarChar(255)
+    is_reset_password Boolean?    @default(false)
+    tel               String?     @db.VarChar(255)
+    fax               String?     @db.VarChar(255)
+    province_id       Int?
+    city_id           Int?
+    area              String?     @db.VarChar(255)
+    address           String?     @db.VarChar(255)
+    qq                String?     @db.VarChar(255)
+    updated_at        DateTime?
+    created_at        DateTime?
+    is_vip            Int?
+    vip_at            DateTime?
+    is_custom_vip     Boolean?
+    vr                String?     @db.VarChar(255)
+    ip                String?     @db.VarChar(255)
+    login_count       Int?        @default(0)
+    last_time         DateTime?
+    deleted_at        DateTime?
+    shopCustom        ShopCustom?
+
+    @@map(name: "users")
+}

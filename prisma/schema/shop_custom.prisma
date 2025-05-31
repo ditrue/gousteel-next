@@ -1,0 +1,26 @@
+model ShopCustom {
+    id                  Int       @id @default(autoincrement())
+    shop_id             Int?      @unique @default(0)
+    user_id             Int       @unique @default(0)
+    user                User?     @relation(fields: [user_id], references: [id])
+    shop                Shop?     @relation(fields: [shop_id], references: [id])
+    title               String?   @db.VarChar(255)
+    product_category_id Int?      @default(0) @map(name: "product_category_id")
+    meta                String?   @db.VarChar(255)
+    num                 String?   @db.VarChar(255)
+    unit                String?   @db.VarChar(255)
+    min_num             String?   @db.VarChar(255)
+    play_type           String?   @db.VarChar(255)
+    cover               String?   @db.VarChar(255)
+    body_info           String?   @db.Text
+    body_cj             String?   @db.Text
+    body_zljc           String?   @db.Text
+    body_qyzz           String?   @db.Text
+    created_at          DateTime? @db.DateTime(3)
+    updated_at          DateTime? @db.DateTime(3)
+    products            String?   @db.Text
+    deleted_at          DateTime? @db.DateTime(3)
+    is_tj               Boolean?
+
+    @@map(name: "shop_customs")
+}

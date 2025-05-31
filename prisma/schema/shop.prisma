@@ -1,0 +1,32 @@
+model Shop {
+    id              Int         @id @default(autoincrement())
+    user_id         Int?        @default(0)
+    name            String?     @db.VarChar(255)
+    tel             String?     @db.VarChar(255)
+    business        String?     @db.VarChar(255) // 主营业务
+    contact_name    String?     @db.VarChar(255)
+    contact_tel     String?     @db.VarChar(255)
+    contact_fex     String?     @db.VarChar(255)
+    contact_mobile  String?     @db.VarChar(255)
+    contact_address String?     @db.VarChar(255)
+    contact_qq      String?     @db.VarChar(255)
+    market          String?     @db.VarChar(255) // 所属市场
+    logo            String?     @db.VarChar(255)
+    banner          String?     @db.VarChar(191)
+    image           String?     @db.VarChar(255)
+    qual            String?     @db.VarChar(191) // 资质
+    workshop_image  String?     @db.VarChar(255) // 厂房图片
+    equi_image      String?     @db.VarChar(255) // 设备图片
+    map             String?     @db.VarChar(255) // 地图
+    body            String?     @db.Text // 详情
+    created_at      DateTime?   @db.DateTime(3)
+    updated_at      DateTime?   @db.DateTime(3)
+    shop_at         DateTime?   @db.DateTime(3)
+    is_super        Boolean?
+    order           Int?        @default(0)
+    deleted_at      DateTime?   @db.DateTime(3)
+    is_tj           Boolean?
+    shopCustom      ShopCustom?
+
+    @@map(name: "shops")
+}

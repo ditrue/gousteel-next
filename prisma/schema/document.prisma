@@ -1,0 +1,20 @@
+model Document {
+    id            Int       @id @default(autoincrement())
+    category_id   Int?
+    cover         String?   @db.VarChar(255)
+    title         String?   @db.VarChar(100)
+    description   String?   @db.VarChar(255)
+    body          String?   @db.LongText
+    view          Int?      @default(0)
+    created_at    DateTime? @db.Timestamp
+    updated_at    DateTime? @db.Timestamp
+    admin_user_id Int?
+    started_at    DateTime? @db.Timestamp
+    ended_at      DateTime? @db.Timestamp
+    deleted_at    DateTime? @db.Timestamp
+    url           String?   @db.VarChar(255)
+
+    category Category? @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict)
+
+    @@map(name: "documents")
+}
