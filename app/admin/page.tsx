@@ -1,91 +1,112 @@
 "use client"
-import React from "react"
-import { Space, Table, Tag } from "antd"
-import type { TableProps } from "antd"
+import React, { useState } from "react"
+import { Button, Drawer, Form, Input, Space, Table } from "antd"
+import type { FormProps, TableProps } from "antd"
+import { useCustomShopAdminList } from "@/features/customShop/api/use-get-custom-shop-list"
 
-interface DataType {
-  key: string
-  name: string
-  age: number
-  address: string
-  tags: string[]
+const App: React.FC = () => {
+  const columns: TableProps["columns"] = [
+    {
+      title: "商铺名称",
+      dataIndex: "title",
+      key: "title",
+      render: (_, record) => <a>{record.shop.name}</a>,
+    },
+    {
+      title: "定制标题",
+      dataIndex: "title",
+      key: "title",
+      render: (_, record) => (
+        <a
+          style={{
+            display: "block",
+            maxWidth: "300px",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {record.title}
+        </a>
+      ),
+    },
+    {
+      title: "操作",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button onClick={showDrawer} size="small">
+            编辑
+          </Button>
+          <Button danger size="small">
+            删除
+          </Button>
+        </Space>
+      ),
+    },
+  ]
+  const { data } = useCustomShopAdminList()
+  const [open, setOpen] = useState(false)
+
+  const showDrawer = () => {
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
+  const onFinish: FormProps["onFinish"] = (values) => {
+    console.log("Success:", values)
+  }
+
+  const onFinishFailed: FormProps["onFinishFailed"] = (errorInfo) => {
+    console.log("Failed:", errorInfo)
+  }
+  return (
+    <>
+      <Table rowKey={"id"} columns={columns} dataSource={data?.list} />
+      <Drawer
+        title="定制信息"
+        closable={{ "aria-label": "Close Button" }}
+        onClose={onClose}
+        open={open}
+      >
+        <Form
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item label={null}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Drawer>
+    </>
+  )
 }
-
-const columns: TableProps<DataType>["columns"] = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green"
-          if (tag === "loser") {
-            color = "volcano"
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          )
-        })}
-      </>
-    ),
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-]
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-]
-
-const App: React.FC = () => (
-  <Table<DataType> columns={columns} dataSource={data} />
-)
 
 export default App
