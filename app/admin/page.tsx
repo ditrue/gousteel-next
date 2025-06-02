@@ -50,6 +50,7 @@ const App: React.FC = () => {
       ),
     },
   ]
+  const [form] = Form.useForm()
   const [pageInfo, setPageInfo] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -58,6 +59,7 @@ const App: React.FC = () => {
   const { data } = useCustomShopAdminList({
     page: pageInfo.page || 1,
     pageSize: pageInfo.pageSize || 10,
+    keywords: pageInfo.keywords || "",
   })
   const [open, setOpen] = useState(false)
 
@@ -83,11 +85,40 @@ const App: React.FC = () => {
     setPageInfo({
       page: current,
       pageSize: pageSize,
-      keywords: "",
+      keywords: pageInfo.keywords || "",
+    })
+  }
+
+  const onSearchFinish: FormProps["onFinish"] = (values) => {
+    console.log("Success:", values)
+    setPageInfo({
+      page: 1,
+      pageSize: pageInfo.pageSize,
+      keywords: form.getFieldValue("keywords") || "",
     })
   }
   return (
     <>
+      <div className="mb-4">
+        <Form
+          name="basic"
+          form={form}
+          layout="inline"
+          initialValues={{ remember: true }}
+          onFinish={onSearchFinish}
+          autoComplete="off"
+        >
+          <Form.Item label="关键词" name="keywords">
+            <Input />
+          </Form.Item>
+
+          <Form.Item label={null}>
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
       <Table
         rowKey={"id"}
         columns={columns}

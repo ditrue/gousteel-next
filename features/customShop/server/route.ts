@@ -39,12 +39,13 @@ const app = new Hono()
       z.object({
         page: z.string().default("1"),
         pageSize: z.string().default("10"),
+        keywords: z.string().optional(),
       })
     ),
     async (c) => {
       const db = c.get("db")
 
-      const { page, pageSize } = c.req.valid("query")
+      const { page, pageSize, keywords } = c.req.valid("query")
       const pageNum = Number(page)
       const pageSizeNum = Number(pageSize)
 
@@ -56,6 +57,11 @@ const app = new Hono()
           user: {
             is_custom_vip: true,
           },
+          ...(keywords && {
+            title: {
+              contains: keywords,
+            },
+          }),
         },
         include: {
           user: true,
@@ -75,6 +81,11 @@ const app = new Hono()
           user: {
             is_custom_vip: true,
           },
+          ...(keywords && {
+            title: {
+              contains: keywords,
+            },
+          }),
         },
       })
 
