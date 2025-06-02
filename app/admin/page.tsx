@@ -4,6 +4,11 @@ import { Button, Drawer, Form, Input, Space, Table } from "antd"
 import type { FormProps, TableProps } from "antd"
 import { useCustomShopAdminList } from "@/features/customShop/api/use-get-custom-shop-list"
 
+interface Params {
+  page?: number
+  pageSize?: number
+  keywords?: string
+}
 const App: React.FC = () => {
   const columns: TableProps["columns"] = [
     {
@@ -45,10 +50,20 @@ const App: React.FC = () => {
       ),
     },
   ]
-  const { data } = useCustomShopAdminList()
+  const [pageInfo, setPageInfo] = useState<Params>({
+    page: 1,
+    pageSize: 10,
+    keywords: "",
+  })
+  const { data } = useCustomShopAdminList({
+    page: pageInfo.page || 1,
+    pageSize: pageInfo.pageSize || 10,
+  })
   const [open, setOpen] = useState(false)
 
   const showDrawer = () => {
+    console.log(data)
+
     setOpen(true)
   }
 
@@ -63,9 +78,27 @@ const App: React.FC = () => {
   const onFinishFailed: FormProps["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo)
   }
+
+  const handleTableChange: TableProps["onChange"] = ({ current, pageSize }) => {
+    setPageInfo({
+      page: current,
+      pageSize: pageSize,
+      keywords: "",
+    })
+  }
   return (
     <>
-      <Table rowKey={"id"} columns={columns} dataSource={data?.list} />
+      <Table
+        rowKey={"id"}
+        columns={columns}
+        pagination={{
+          current: data?.page,
+          pageSize: data?.pageSize,
+          total: data?.total,
+        }}
+        onChange={handleTableChange}
+        dataSource={data?.list}
+      />
       <Drawer
         title="定制信息"
         closable={{ "aria-label": "Close Button" }}

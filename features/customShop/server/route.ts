@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator"
+import { z } from "zod"
 import { sessionMiddleware } from "@/lib/session-middleware"
 import { Hono } from "hono"
-import { updateCustomShopSchema } from "../schemas"
 
 const app = new Hono()
   .get("/pipe-recommends", sessionMiddleware, async (c) => {
@@ -34,16 +34,22 @@ const app = new Hono()
   .get(
     "/admin-list",
     sessionMiddleware,
-    zValidator("form", updateCustomShopSchema),
+    zValidator(
+      "query",
+      z.object({
+        page: z.string().default("1"),
+        pageSize: z.string().default("10"),
+      })
+    ),
     async (c) => {
       const db = c.get("db")
 
-      // 获取查询参数，设置默认值
-      const page = parseInt(c.req.query("page") || "1")
-      const pageSize = parseInt(c.req.query("pageSize") || "10")
+      const { page, pageSize } = c.req.valid("query")
+      const pageNum = Number(page)
+      const pageSizeNum = Number(pageSize)
 
       // 计算跳过的记录数
-      const skip = (page - 1) * pageSize
+      const skip = (pageNum - 1) * pageSizeNum
 
       const shopCustoms = await db.shopCustom.findMany({
         where: {
@@ -61,7 +67,7 @@ const app = new Hono()
           },
         },
         skip: skip,
-        take: pageSize,
+        take: pageSizeNum,
       })
 
       const total = await db.shopCustom.count({
@@ -77,9 +83,25 @@ const app = new Hono()
         data: {
           list: shopCustoms,
           total: total,
+          page: pageNum,
+          pageSize: pageSizeNum,
         },
       })
     }
   )
+  .get("/:customShopID", sessionMiddleware, (c) => {
+    const customShopID = Number(c.req.param("customShopID"))
+
+    const shopCustom = c.get("db").shopCustom.findFirst({
+      where: {
+        id: customShopID,
+      },
+      include: {
+        user: true,
+        shop: true,
+      },
+    })
+    return c.json({ message: "Hello, world!", data: shopCustom })
+  })
 
 export default app
