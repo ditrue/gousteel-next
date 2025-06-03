@@ -7,6 +7,7 @@ import { useGetExhibitions } from "@/features/pipe/api/use-get-exhibitions"
 import { formatDate } from "@/lib/utils"
 import { useGetTechs } from "@/features/pipe/api/use-get-techs"
 import { usePipeRecommends } from "@/features/customShop/api/use-get-pipe-recommends"
+import { Skeleton } from "antd"
 
 // 写一个函数  传一个日期Date 返回下面 的格式
 // <div className="bg-gray-100 p-4 flex flex-col items-center justify-center">
@@ -31,7 +32,7 @@ const formatDateToDiv = (dateString: string) => {
 }
 
 export default function Home() {
-  const { data } = useGetTops()
+  const { data, isLoading } = useGetTops()
   const first = data?.[0]
   // 剩下的数据
   const restData = data?.slice(1) || []
@@ -122,22 +123,28 @@ export default function Home() {
       <div className="container mx-auto px-4 mt-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white rounded shadow">
           {/* Main Image */}
-          <Link href={`/news/${first?.id}`} className="md:col-span-2">
-            <div className="relative h-full">
-              {first?.cover && (
-                <Image
-                  src={"https://gousteel.com/uploads/" + first.cover}
-                  alt="Workers in red uniforms working on pipeline"
-                  width={510}
-                  height={392}
-                  className="w-full h-full object-cover rounded"
-                />
-              )}
-              <div className="absolute bottom-0 left-0 bg-white bg-opacity-4 p-2 w-full">
-                <h3 className="text-xl">{first?.title}</h3>
-              </div>
+          {isLoading ? (
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
             </div>
-          </Link>
+          ) : (
+            <Link href={`/news/${first?.id}`} className="md:col-span-2">
+              <div className="relative h-full">
+                {first?.cover && (
+                  <Image
+                    src={"https://gousteel.com/uploads/" + first.cover}
+                    alt="Workers in red uniforms working on pipeline"
+                    width={510}
+                    height={392}
+                    className="w-full h-full object-cover rounded"
+                  />
+                )}
+                <div className="absolute bottom-0 left-0 bg-white bg-opacity-4 p-2 w-full">
+                  <h3 className="text-xl">{first?.title}</h3>
+                </div>
+              </div>
+            </Link>
+          )}
 
           {/* News Section */}
           <div className="md:col-span-2 bg-white">

@@ -18,7 +18,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-12">
             <div className="flex items-center space-x-8">
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="" className="text-white hover:text-gray-300">
                 首页
               </a>
 
@@ -28,8 +28,44 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
                   <ChevronDown className="h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>现货列表</DropdownMenuItem>
-                  <DropdownMenuItem>库存查询</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/stocks/gangguan" className="block w-full h-full">
+                      钢管
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/stocks/xingcai" className="block w-full h-full">
+                      型材
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a
+                      href="/stocks/guanjian_3"
+                      className="block w-full h-full"
+                    >
+                      管件
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/stocks/falan" className="block w-full h-full">
+                      法兰
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/stocks/famen" className="block w-full h-full">
+                      阀门
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/stocks/bancai" className="block w-full h-full">
+                      板材
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/stocks/juancai" className="block w-full h-full">
+                      卷材
+                    </a>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
@@ -39,24 +75,48 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
                   <ChevronDown className="h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>市场行情</DropdownMenuItem>
-                  <DropdownMenuItem>行业资讯</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/news" className="block w-full h-full">
+                      资讯首页
+                    </a>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem>
+                    <a href="/news/1/category" className="block w-full h-full">
+                      头条资讯
+                    </a>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem>
+                    <a href="/news/2/category" className="block w-full h-full">
+                      企业风采
+                    </a>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem>
+                    <a href="/news/3/category" className="block w-full h-full">
+                      购钢现货网中国行
+                    </a>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="/customs" className="text-white hover:text-gray-300">
                 找工厂
               </a>
-              <a href="#" className="text-white hover:text-gray-300">
-                找大管
+              <a href="/pipe" className="text-white hover:text-gray-300">
+                找水管
               </a>
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="/logistics" className="text-white hover:text-gray-300">
                 找物流
               </a>
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="/panoramas" className="text-white hover:text-gray-300">
                 全景展示
               </a>
-              <a href="#" className="text-white hover:text-gray-300 relative">
+              <a
+                href="https://www.pinpv.com/"
+                className="text-white hover:text-gray-300 relative"
+              >
                 拼钢网
                 <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-4 h-4 flex items-center justify-center text-white">
                   ?
