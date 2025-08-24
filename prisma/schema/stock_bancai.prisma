@@ -1,0 +1,23 @@
+model StockBancai {
+    id             BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
+    user_id        BigInt?     @db.UnsignedBigInt
+    vari           String?     @db.VarChar(8) // 品种
+    mate           String?     @db.VarChar(255) // 材质
+    surface        String?     @db.VarChar(255) // 表面
+    spec           String?     @db.VarChar(255) // 规格
+    spec_thickness String?     @db.VarChar(255) // 厚度
+    spec_width     String?     @db.VarChar(255) // 宽度
+    spec_length    String?     @db.VarChar(255) // 长度
+    canhou         String?     @db.VarChar(255) // 参厚
+    level          String?     @db.VarChar(255) // 等级
+    number         Int?        @db.Int // 件数
+    weight         String?     @db.VarChar(255) // 重量
+    company        String?     @db.VarChar(255) // 生产厂家
+    price          String?     @db.VarChar(255) // 价格（元/吨）
+    remarks        String?     @db.VarChar(255) // 备注
+    created_at     DateTime?   @db.Timestamp(3)
+    updated_at     DateTime?   @db.Timestamp(3)
+    deleted_at     DateTime?   @db.Timestamp(3)
+
+    @@map(name: "stock_bancais")
+}

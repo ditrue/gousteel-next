@@ -1,0 +1,8 @@
+model StockGuanJian {
+    id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+    created_at DateTime? @db.Timestamp(3)
+    updated_at DateTime? @db.Timestamp(3)
+    deleted_at DateTime? @db.Timestamp(3)
+
+    @@map(name: "stock_guan_jians")
+}

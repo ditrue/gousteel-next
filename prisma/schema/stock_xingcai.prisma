@@ -1,0 +1,14 @@
+model StockXingcai {
+  id        BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id    BigInt?  @map("user_id") @db.UnsignedBigInt
+  vari      String?  @db.Char(255) // 品种
+  mate      String?  @db.VarChar(255) // 材质
+  spec      String?  @db.Char(255) // 规格
+  weight    Int?     // 重量
+  remarks   String?  @db.VarChar(255)
+  createdAt DateTime? @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime? @map("updated_at") @db.Timestamp(0)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamp(0)
+
+  @@map("stock_xingcais")
+}

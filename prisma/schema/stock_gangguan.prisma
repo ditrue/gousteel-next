@@ -1,0 +1,19 @@
+model StockGangguan {
+    id           BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+    user_id      BigInt?   @db.UnsignedBigInt
+    vari         String?   @db.VarChar(255)
+    mate         String?   @db.VarChar(255)
+    spec         String?   @db.VarChar(255)
+    spec_outside String?   @db.VarChar(255)
+    spec_wall    Float?    @db.Float
+    spec_long    String?   @db.VarChar(255)
+    spec_ow      String?   @db.VarChar(255)
+    number       BigInt?   @db.BigInt // 支数
+    weight       Float?    @db.Float // 重量
+    remarks      String?   @db.VarChar(255)
+    created_at   DateTime? @db.Timestamp(3)
+    updated_at   DateTime? @db.Timestamp(3)
+    deleted_at   DateTime? @db.Timestamp(3)
+
+    @@map(name: "stock_gangguans")
+}

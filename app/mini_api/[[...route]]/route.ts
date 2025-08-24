@@ -1,11 +1,9 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import pipe from "@/features/pipe/server/route";
-import pipecustomShop from "@/features/customShop/server/route";
+import home from "@/features/mini/custom-shop/server/route";
 
-const app = new Hono().basePath("/api");
-
-const routes = app.route("/pipes", pipe).route("/custom-shops", pipecustomShop);
+const app = new Hono().basePath("/mini_api");
+const routes = app.route("/shop-customs", home);
 
 // 定义一个任意请求的handle
 export const GET = handle(app);
